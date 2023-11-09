@@ -1,2 +1,2 @@
-per inserire gli user negli eventi posso utilizzare le DTO(data transfert object)
-basta che creare una classe e con la quale modificherò oggetto in entrata nell'API
+- cercare/implementare metodi per gestire le relazioni complesse tra le tabelle;
+- attualmente riesco a gestire tutti i metodi CRUD semplici e REST API perfettamente funzionanti

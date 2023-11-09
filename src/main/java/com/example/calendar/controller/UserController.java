@@ -1,12 +1,14 @@
 package com.example.calendar.controller;
 
-import com.example.calendar.DTO.UserDTO;
+
 import com.example.calendar.model.User;
 import com.example.calendar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -17,33 +19,34 @@ public class UserController {
 
     @PostMapping("/create-new-user")
     public String createNewUser(@RequestBody User user){
+
         userService.createUser(user);
+
         return "New user created";
     }
 
-    @GetMapping("/view-user-by-id")
-    public UserDTO getUserById(@RequestParam int id) throws UserPrincipalNotFoundException{
-        return userService.getUserById(id);
-    }
-    /*
-    public User getUserById(@RequestParam("id") int id) throws UserPrincipalNotFoundException {
-        return userService.getUserById(id);
+    @GetMapping("/view-all-user")
+    public List<User> geAllUser() {
+        return userService.viewUsers();
     }
 
-     */
 
-    @GetMapping("/view-user-by-email")
-    public User getUserByEmail(@RequestParam String email) throws UserPrincipalNotFoundException{
-        return userService.getUserByEmail(email);
-    }
+    @PutMapping("/update-user")
+    public String updateUserPassword(@RequestParam int id, @RequestBody User user) {
 
-    @PutMapping("/update-user-password")
-    public void updateUserPassword(@RequestParam int id, @RequestParam String password) throws UserPrincipalNotFoundException {
-        userService.updatePassword(id, password);
+        userService.updateUser(id,
+                Optional.ofNullable(user.getName()),
+                Optional.ofNullable(user.getSurname()),
+                Optional.ofNullable(user.getPassword()));
+
+        return "User with ID " + id + " updated";
     }
 
     @DeleteMapping("/delete-user-by-id")
-    public void deleteUserById(@RequestParam int id) throws UserPrincipalNotFoundException{
-        userService.deleteUserById(id);
+    public String deleteUserById(@RequestParam int id) throws UserPrincipalNotFoundException{
+
+        userService.deleteUser(id);
+
+        return "User with ID " + id + " deleted";
     }
 }

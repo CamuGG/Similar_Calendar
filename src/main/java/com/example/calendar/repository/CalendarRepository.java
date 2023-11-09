@@ -10,23 +10,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-
-    //User getById(int id);
-
+public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     @Modifying
-    @Query("UPDATE User u SET u.name = :name, " +
-            "u.surname = :surname, " +
-            "u.password = :password " +
-            "WHERE u.id = :id")
-    void updateUser(@Param("id") int id,
-                    @Param("name") String name,
-                    @Param("surname") String surname,
-                    @Param("password") String password);
+    @Query("UPDATE Calendar c SET c.name = :name, " +
+            "c.description = :description, " +
+            "c.user = :user " +
+            "WHERE c.id = :id")
+    void updateCalendar(@Param("id") int id,
+                        @Param("name") String name,
+                        @Param("description") String description,
+                        @Param("user")User user);
 
 }
-
