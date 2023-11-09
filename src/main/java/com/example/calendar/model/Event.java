@@ -38,58 +38,70 @@ public class Event {
     }
 
 
-
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
     }
 
+
     public String getDescription() {
         return description;
     }
+
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+
     public LocalDateTime getToStart() {
         return toStart;
     }
+
 
     public void setToStart(LocalDateTime toStart) {
         this.toStart = toStart;
     }
 
+
     public LocalDateTime getTheEnd() {
         return theEnd;
     }
+
 
     public void setTheEnd(LocalDateTime theEnd) {
         this.theEnd = theEnd;
     }
 
+
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;
     }
 
+
     public Calendar getCalendar() {
         return calendar;
     }
+
 
     public void setCalendar(Calendar calendar) {
         this.calendar = calendar;
     }
 
+
     public List<User> getUsers() {
         return users;
     }
+
 
     public void setUsers(List<User> users) {
         this.users = users;

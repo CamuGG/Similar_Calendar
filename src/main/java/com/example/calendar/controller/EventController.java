@@ -16,7 +16,9 @@ public class EventController {
 
     @PostMapping("/create-new-event")
     public String createNewEvent(@RequestBody Event event){
+
         eventService.createEvent(event);
+
         return "New event created";
     }
 
@@ -27,13 +29,21 @@ public class EventController {
 
     @PutMapping("/update-event")
     public String updateEvent(@RequestParam int id, @RequestBody Event event){
-        eventService.updateEvent(id, Optional.ofNullable(event.getName()), Optional.ofNullable(event.getDescription()), Optional.ofNullable(event.getToStart()), Optional.ofNullable(event.getTheEnd()));
+
+        eventService.updateEvent(id,
+                Optional.ofNullable(event.getName()),
+                Optional.ofNullable(event.getDescription()),
+                Optional.ofNullable(event.getToStart()),
+                Optional.ofNullable(event.getTheEnd()));
+
         return "Event updated";
     }
 
     @DeleteMapping("/delete-event")
     public String deleteEvent(int id){
+
         eventService.deleteEvent(id);
+
         return "Event with id " + id + " deleted";
     }
 }

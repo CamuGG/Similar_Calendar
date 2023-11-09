@@ -1,6 +1,7 @@
 package com.example.calendar.service;
 
 import com.example.calendar.model.Calendar;
+import com.example.calendar.model.Event;
 import com.example.calendar.model.User;
 import com.example.calendar.repository.CalendarRepository;
 import jakarta.transaction.Transactional;
@@ -26,14 +27,22 @@ public class CalendarService {
     }
 
     @Transactional
-    public void updateCalendar(int id, String name, String description) {
+    public void updateCalendar(int id,
+                               Optional<String> name,
+                               Optional<String> description,
+                               Optional<User> user) {
 
         Calendar calendar = calendarRepository.getById(id);
-        if (calendar != null) {
-            calendar.setName(name);
-            calendar.setDescription(description);
 
-            calendarRepository.updateCalendar(id, name,description);
+        if (calendar != null) {
+            name.ifPresent(calendar::setName);
+            description.ifPresent(calendar::setDescription);
+            user.ifPresent(calendar::setUser);
+
+            calendarRepository.updateCalendar(id,
+                    calendar.getName(),
+                    calendar.getDescription(),
+                    calendar.getUser());
         }
 
     }

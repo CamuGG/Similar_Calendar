@@ -14,8 +14,16 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
 
     @Modifying
-    @Query("UPDATE Event e SET e.name = :name, e.description = :description, e.toStart = :toStart, e.theEnd = :theEnd WHERE e.id = :id")
-    void updateEvent(@Param("id") int id, @Param("name") String name, @Param("description") String description, @Param("toStart") LocalDateTime toStart, @Param("theEnd") LocalDateTime theEnd);
+    @Query("UPDATE Event e SET e.name = :name, " +
+            "e.description = :description, " +
+            "e.toStart = :toStart, " +
+            "e.theEnd = :theEnd " +
+            "WHERE e.id = :id")
+    void updateEvent(@Param("id") int id,
+                     @Param("name") String name,
+                     @Param("description") String description,
+                     @Param("toStart") LocalDateTime toStart,
+                     @Param("theEnd") LocalDateTime theEnd);
 
 
 

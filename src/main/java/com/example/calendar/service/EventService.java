@@ -31,7 +31,11 @@ public class EventService {
 
 
     @Transactional
-    public void updateEvent(int id, Optional<String> name, Optional<String> description, Optional<LocalDateTime> toStart, Optional<LocalDateTime> theEnd){
+    public void updateEvent(int id,
+                            Optional<String> name,
+                            Optional<String> description,
+                            Optional<LocalDateTime> toStart,
+                            Optional<LocalDateTime> theEnd){
 
         Event event = eventRepository.getById(id);
 
@@ -41,7 +45,11 @@ public class EventService {
             toStart.ifPresent(event::setToStart);
             theEnd.ifPresent(event::setTheEnd);
 
-            eventRepository.updateEvent(id, event.getName(), event.getDescription(), event.getToStart(), event.getTheEnd());
+            eventRepository.updateEvent(id,
+                    event.getName(),
+                    event.getDescription(),
+                    event.getToStart(),
+                    event.getTheEnd());
         }
     }
 
