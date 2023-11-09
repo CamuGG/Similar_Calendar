@@ -8,10 +8,10 @@ public class UserDTO {
     private String surname;
     private String password;
 
+
     public UserDTO (){
 
     }
-
 
     public int getId() {
         return id;

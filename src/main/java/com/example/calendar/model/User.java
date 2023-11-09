@@ -1,7 +1,9 @@
 package com.example.calendar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,22 +22,21 @@ public class User {
 
     private String password;
 
-    /*
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Calendar> calendarSet;
 
-     */
+    @ManyToMany
+    @JoinTable(name = "user_event",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<Event> events;
+
 
 
     public User(){
 
-    }
-
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
     }
 
     public int getId() {
@@ -78,7 +79,7 @@ public class User {
         this.password = password;
     }
 
-    /*
+
     public Set<Calendar> getCalendarSet() {
         return calendarSet;
     }
@@ -87,5 +88,11 @@ public class User {
         this.calendarSet = calendarSet;
     }
 
-     */
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 }

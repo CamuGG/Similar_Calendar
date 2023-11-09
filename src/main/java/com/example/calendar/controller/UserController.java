@@ -25,12 +25,7 @@ public class UserController {
     public UserDTO getUserById(@RequestParam int id) throws UserPrincipalNotFoundException{
         return userService.getUserById(id);
     }
-    /*
-    public User getUserById(@RequestParam("id") int id) throws UserPrincipalNotFoundException {
-        return userService.getUserById(id);
-    }
 
-     */
 
     @GetMapping("/view-user-by-email")
     public User getUserByEmail(@RequestParam String email) throws UserPrincipalNotFoundException{
@@ -38,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/update-user-password")
-    public void updateUserPassword(@RequestParam int id, @RequestParam String password) throws UserPrincipalNotFoundException {
+    public void updateUserPassword(@RequestParam int id, @RequestParam String password) throws UserPrincipalNotFoundException{
         userService.updatePassword(id, password);
     }
 

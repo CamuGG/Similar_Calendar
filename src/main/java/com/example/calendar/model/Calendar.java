@@ -1,5 +1,6 @@
 package com.example.calendar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,15 +13,16 @@ public class Calendar {
     private int id;
 
     private String name;
-/*
+
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "owner_calendar_id")
+    @JsonIgnore
     private User user;
 
- */
-
     @OneToMany(mappedBy = "calendar")
-    private List<Event> eventList;
+    private List<Event> events;
 
 
     public Calendar(){
@@ -47,7 +49,16 @@ public class Calendar {
     public void setName(String name) {
         this.name = name;
     }
-/*
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     public User getUser() {
         return user;
     }
@@ -56,13 +67,13 @@ public class Calendar {
         this.user = user;
     }
 
- */
 
-    public List<Event> getEventList() {
-        return eventList;
+
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }
