@@ -4,6 +4,8 @@ package com.example.calendar.controller;
 import com.example.calendar.model.User;
 import com.example.calendar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -11,42 +13,60 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
 
-    @PostMapping("/create-new-user")
-    public String createNewUser(@RequestBody User user){
+    @PostMapping
+    public ResponseEntity createNewUser(@RequestBody User user){
+        try {
+            return ResponseEntity.ok(userService.createUser(user));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
-        userService.createUser(user);
-
-        return "New user created";
     }
 
-    @GetMapping("/view-all-user")
-    public List<User> geAllUser() {
-        return userService.viewUsers();
+    @GetMapping
+    public ResponseEntity geAllUser() {
+        try {
+            return ResponseEntity.ok(userService.viewUsers());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getUserById(@PathVariable int id){
+        try {
+            return ResponseEntity.ok(userService.viewUserToId(id));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 
 
-    @PutMapping("/update-user")
-    public String updateUserPassword(@RequestParam int id, @RequestBody User user) {
+    @PostMapping("/{id})")
+    public ResponseEntity updateUser(@PathVariable int id, @RequestBody User user) {
+        try {
+            return ResponseEntity.ok(userService.updateUser(id, user));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
-        userService.updateUser(id,
-                Optional.ofNullable(user.getName()),
-                Optional.ofNullable(user.getSurname()),
-                Optional.ofNullable(user.getPassword()));
-
-        return "User with ID " + id + " updated";
     }
 
-    @DeleteMapping("/delete-user-by-id")
-    public String deleteUserById(@RequestParam int id) throws UserPrincipalNotFoundException{
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUserById(@PathVariable int id) {
+        try {
+            return ResponseEntity.ok(userService.deleteUser(id));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
-        userService.deleteUser(id);
-
-        return "User with ID " + id + " deleted";
     }
 }

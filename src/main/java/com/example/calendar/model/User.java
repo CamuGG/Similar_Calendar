@@ -25,7 +25,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<Calendar> calendars;
+    private List<Calendar> calendars;
 
     @ManyToMany
     @JoinTable(name = "user_event",
@@ -90,12 +90,12 @@ public class User {
     }
 
 
-    public Set<Calendar> getCalendars() {
+    public List<Calendar> getCalendars() {
         return calendars;
     }
 
 
-    public void setCalendars(Set<Calendar> calendars) {
+    public void setCalendars(List<Calendar> calendars) {
         this.calendars = calendars;
     }
 

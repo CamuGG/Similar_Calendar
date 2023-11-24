@@ -3,48 +3,58 @@ package com.example.calendar.controller;
 import com.example.calendar.model.Calendar;
 import com.example.calendar.service.CalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/calendar")
 public class CalendarController {
 
     @Autowired
     CalendarService calendarService;
 
 
-    @PostMapping("/create-new-calendar")
-    public String createNewCalendar(@RequestBody Calendar calendar){
+    @PostMapping("/{userID}")
+    public ResponseEntity createNewCalendar(@PathVariable int userID, @RequestBody Calendar calendar){
+        try {
+            return ResponseEntity.ok(calendarService.createCalendar(userID, calendar));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
-        calendarService.createCalendar(calendar);
-
-        return "New calendar created";
     }
 
-    @GetMapping("/view-all-calendar")
-    public List<Calendar> viewAllCalendar(){
-       return calendarService.getAllCalendar();
+    @GetMapping("/{userID}")
+    public ResponseEntity viewAllCalendarByUserId(@PathVariable int userID){
+       try {
+           return ResponseEntity.ok(calendarService.getAllCalendarByUser(userID));
+       } catch (Exception e){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+       }
     }
 
-    @PutMapping("/update-calendar")
-    public String updateCalendar(@RequestParam int id, @RequestBody Calendar calendar){
-
-        calendarService.updateCalendar(id,
-                Optional.ofNullable(calendar.getName()),
-                Optional.ofNullable(calendar.getDescription()),
-                Optional.ofNullable(calendar.getUser()));
-
-        return "Calendar updated";
+    @PostMapping("/{id}")
+    public ResponseEntity updateCalendar(@PathVariable int id, @RequestBody Calendar calendar){
+        try {
+            return ResponseEntity.ok(calendarService.updateCalendar(id, calendar));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
-    @DeleteMapping("/delete-calendar")
-    public String deleteCalendar(@RequestParam int id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteCalendar(@PathVariable int id){
+        try {
+            return ResponseEntity.ok(calendarService.deleteCalendar(id));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
-        calendarService.deleteCalendar(id);
-
-        return "Calendar with id " +  id + " deleted";
     }
 
 }

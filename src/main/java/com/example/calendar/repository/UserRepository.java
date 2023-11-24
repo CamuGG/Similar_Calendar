@@ -28,5 +28,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                     @Param("surname") String surname,
                     @Param("password") String password);
 
+
+
+
 }
 
