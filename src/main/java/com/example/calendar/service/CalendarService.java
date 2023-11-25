@@ -26,10 +26,15 @@ public class CalendarService {
 
     public Calendar createCalendar(int userID, Calendar calendar) throws Exception{
         if (userRepository.findById(userID).isPresent()){
-            return calendarRepository.save(calendar);
+            User user = userRepository.findById(userID).orElse(null);
+
+            calendar.setUser(user);
+
         } else {
             throw new Exception(String.format("User with ID %s not exist", userID));
         }
+
+        return calendarRepository.save(calendar);
     }
 
     public List<Calendar> getAllCalendarByUser(int userID) throws Exception{

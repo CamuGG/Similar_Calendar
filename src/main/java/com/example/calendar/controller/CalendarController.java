@@ -38,7 +38,7 @@ public class CalendarController {
        }
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateCalendar(@PathVariable int id, @RequestBody Calendar calendar){
         try {
             return ResponseEntity.ok(calendarService.updateCalendar(id, calendar));

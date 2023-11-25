@@ -3,6 +3,7 @@ package com.example.calendar.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,12 +26,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Calendar> calendars;
+    private List<Calendar> calendars = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "user_event",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
+    @JsonIgnore
     private List<Event> events;
 
 

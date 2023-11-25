@@ -3,6 +3,7 @@ package com.example.calendar.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class Calendar {
     private User user;
 
     @OneToMany(mappedBy = "calendar")
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
 
 
     public Calendar(){

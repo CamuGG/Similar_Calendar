@@ -1,6 +1,7 @@
 package com.example.calendar.service;
 
 
+import com.example.calendar.model.Calendar;
 import com.example.calendar.model.User;
 import com.example.calendar.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -23,6 +24,12 @@ public class UserService {
 
     public User createUser(User user) throws Exception{
         try {
+            Calendar calendar = new Calendar();
+            calendar.setName("default calendar");
+            calendar.setUser(user);
+
+            user.getCalendars().add(calendar);
+
             return userRepository.save(user);
         } catch (Exception e){
             throw new Exception(String.format("Email %s already is use", user.getEmail()));
@@ -46,6 +53,17 @@ public class UserService {
             return userRepository.findById(id);
         } else {
             throw new Exception(String.format("User with ID %s not found", id));
+        }
+
+    }
+
+
+    public Optional<User> viewUserByEmail(String email) throws Exception{
+
+        try {
+            return userRepository.findByEmail(email);
+        } catch (Exception e){
+            throw new Exception(String.format("User with email %s not found", email));
         }
 
     }

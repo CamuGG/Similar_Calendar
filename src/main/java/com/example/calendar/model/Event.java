@@ -1,9 +1,11 @@
 package com.example.calendar.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,9 +28,11 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "calendar_id")
+    @JsonIgnore
     private Calendar calendar;
 
     @ManyToMany(mappedBy = "events")
+    @JsonIgnore
     private List<User> users;
 
 

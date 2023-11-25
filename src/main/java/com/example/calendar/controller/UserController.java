@@ -37,7 +37,9 @@ public class UserController {
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity getUserById(@PathVariable int id){
@@ -50,7 +52,18 @@ public class UserController {
     }
 
 
-    @PostMapping("/{id})")
+    @GetMapping("/email/{email}")
+    public ResponseEntity getUserByEmail(@PathVariable String email){
+        try {
+            return ResponseEntity.ok(userService.viewUserByEmail(email));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+
+    @PutMapping("/{id}")
     public ResponseEntity updateUser(@PathVariable int id, @RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.updateUser(id, user));
