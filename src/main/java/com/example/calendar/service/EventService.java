@@ -32,7 +32,7 @@ public class EventService {
     UserRepository userRepository;
 
 
-    RecurrenceManager recurrenceManager;
+
 
 
 
