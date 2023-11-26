@@ -7,11 +7,13 @@ import com.example.calendar.model.User;
 import com.example.calendar.repository.CalendarRepository;
 import com.example.calendar.repository.EventRepository;
 import com.example.calendar.repository.UserRepository;
+import com.example.calendar.util.RecurrenceManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -30,13 +32,20 @@ public class EventService {
     UserRepository userRepository;
 
 
+    RecurrenceManager recurrenceManager;
 
-    public Event createEvent(int calendarID, Event event) throws Exception{
+
+
+    public Event createEvent(int calendarID, Event event, LocalDateTime startTime, int duration) throws Exception{
+
+        RecurrenceManager recurrenceManager = new RecurrenceManager();
 
         if (calendarRepository.findById(calendarID).isPresent()){
             Calendar calendar = calendarRepository.findById(calendarID).orElse(null);
 
             event.setCalendar(calendar);
+
+            recurrenceManager.setRecurrenceTimeAndDuration(event, startTime, duration);
         }else {
             throw new Exception(String.format("Calendar with ID %s not found", calendarID));
         }
@@ -121,4 +130,7 @@ public class EventService {
             throw new Exception(String.format("Event with ID %s not found", id));
         }
     }
+
+
+
 }

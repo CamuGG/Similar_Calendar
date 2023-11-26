@@ -1,5 +1,6 @@
 package com.example.calendar.model;
 
+import com.example.calendar.util.RecurrenceType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -25,6 +26,11 @@ public class Event {
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime theEnd;
+
+    private RecurrenceType recurrenceType;
+
+    @JsonIgnore
+    private Integer recurrenceInterval;
 
     @ManyToOne
     @JoinColumn(name = "calendar_id")
@@ -109,5 +115,22 @@ public class Event {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+
+    public RecurrenceType getRecurrenceType() {
+        return recurrenceType;
+    }
+
+    public void setRecurrenceType(RecurrenceType recurrenceType) {
+        this.recurrenceType = recurrenceType;
+    }
+
+    public Integer getRecurrenceInterval() {
+        return recurrenceInterval;
+    }
+
+    public void setRecurrenceInterval(Integer recurrenceInterval) {
+        this.recurrenceInterval = recurrenceInterval;
     }
 }

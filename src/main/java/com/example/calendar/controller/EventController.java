@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +19,14 @@ public class EventController {
     @Autowired
     EventService eventService;
 
-    @PostMapping("/{calendarID}")
-    public ResponseEntity createNewEvent(@PathVariable int calendarID,@RequestBody Event event){
+    @PostMapping("/{calendarID}/start/{startTime}/duration/{duration}")
+    public ResponseEntity createNewEvent(@PathVariable int calendarID,
+                                         @RequestBody Event event,
+                                         @PathVariable LocalDateTime startTime,
+                                         @PathVariable int duration){
 
         try {
-            return ResponseEntity.ok(eventService.createEvent(calendarID, event));
+            return ResponseEntity.ok(eventService.createEvent(calendarID, event, startTime, duration));
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
